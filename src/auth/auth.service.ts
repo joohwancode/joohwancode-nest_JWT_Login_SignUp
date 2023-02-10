@@ -11,10 +11,10 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
   async jwtLogIn(data: LoginRequestDto) {
-    const { email, password } = data;
+    const { loginid, password } = data;
 
     //*해당하는 이메일이 있는지 체크 로그인 유효성 검사 체크
-    const user = await this.usersRepository.findUserByEmail(email);
+    const user = await this.usersRepository.findUserByLoginId(loginid);
     if (!user) {
       throw new UnauthorizedException('이메일과 비밀번호를 확인해주세요');
     }
@@ -30,7 +30,7 @@ export class AuthService {
     }
 
     //서명이 되어 토큰이 발급된다.
-    const payload = { email: email, sub: user.id };
+    const payload = { loginid: loginid, sub: user.id };
 
     return {
       token: this.jwtService.sign(payload),

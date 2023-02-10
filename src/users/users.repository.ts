@@ -16,13 +16,13 @@ export class UsersRepository {
     return user;
   }
   //로그인시 이메일 확인
-  async findUserByEmail(email: string): Promise<User | null> {
-    const user = await this.userModel.findOne({ email });
+  async findUserByLoginId(loginid: string): Promise<User | null> {
+    const user = await this.userModel.findOne({ loginid });
     return user;
   }
 
-  async existsByEmail(email: string): Promise<boolean> {
-    const result = await this.userModel.exists({ email });
+  async existsByLoginId(loginid: string): Promise<boolean> {
+    const result = await this.userModel.exists({ loginid });
     if (result) return true;
     else return false;
   }

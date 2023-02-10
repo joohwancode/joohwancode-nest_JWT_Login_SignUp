@@ -7,9 +7,9 @@ import * as bcrypt from 'bcrypt';
 export class UsersService {
   constructor(private readonly usersRepository: UsersRepository) {}
   async signUp(body: UserRequestDto) {
-    const { email, name, password } = body;
+    const { loginid, name, password } = body;
     //중복 방지하자 (유효성 검사를 하자 )
-    const isUserExist = await this.usersRepository.existsByEmail(email);
+    const isUserExist = await this.usersRepository.existsByLoginId(loginid);
     if (isUserExist) {
       throw new UnauthorizedException('해당하는 이메일은 이미 존재합니다.');
     }
@@ -18,7 +18,7 @@ export class UsersService {
 
     //본격적으로 저장을 하자
     const user = await this.usersRepository.create({
-      email,
+      loginid,
       name,
       password: hashedPassword,
     });

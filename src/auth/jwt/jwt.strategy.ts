@@ -20,7 +20,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       payload.sub,
     );
     if (user) {
-      return user; //request user 에 cat 이 들어가게 된다.
+      return user; //request user 에 user가 들어가게 된다.
     } else {
       throw new UnauthorizedException('접근 오류');
     }

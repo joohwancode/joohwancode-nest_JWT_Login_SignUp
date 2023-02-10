@@ -16,7 +16,7 @@ import { ConfigModule } from '@nestjs/config';
       signOptions: { expiresIn: '1y' },
     }),
     //모듈 자체를 임포트 한다. !! 순환 참조 모델을 피하기 위해 forwardRef
-    //cat auth 서로가 임포트 하기 때문에
+    //user auth 서로가 임포트 하기 때문에
     forwardRef(() => UsersModule),
   ],
   providers: [AuthService, JwtStrategy],

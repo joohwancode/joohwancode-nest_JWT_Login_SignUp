@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, SchemaOptions } from 'mongoose';
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 //db에서 하나 만들어줄때 타임스탬프를 찍어준다.
 const options: SchemaOptions = {
@@ -10,17 +10,17 @@ const options: SchemaOptions = {
 @Schema(options)
 export class User extends Document {
   @ApiProperty({
-    example: 'joohwan@kakao.com',
-    description: 'email',
+    example: 'joohwan1234',
+    description: 'loginid',
     required: true,
   })
   @Prop({
     required: true,
     unique: true,
   })
-  @IsEmail()
+  @IsString()
   @IsNotEmpty()
-  email: string;
+  loginid: string;
 
   @ApiProperty({
     example: 'joohwan',
@@ -50,7 +50,7 @@ export class User extends Document {
   @IsString()
   imgUrl: string;
   //언제 업데이트 했는지 사용자는 알 필요없고 백엔드만 필요하다.
-  readonly readOnlyData: { id: string; email: string; name: string };
+  readonly readOnlyData: { id: string; loginid: string; name: string };
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
@@ -60,7 +60,7 @@ export const UserSchema = SchemaFactory.createForClass(User);
 UserSchema.virtual('readOnlyData').get(function (this: User) {
   return {
     id: this.id,
-    email: this.email,
+    loginid: this.loginid,
     name: this.name,
   };
 });
